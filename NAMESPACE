@@ -1,0 +1,4 @@
+importFrom("graphics", "abline", "par", "plot", "points")
+importFrom("stats", "median")
+export(getChangepoints.x, getASCN.x, view)
+useDynLib(falconx)

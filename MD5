@@ -1,0 +1,15 @@
+db0e193805f3a889fa9292073cfab523 *DESCRIPTION
+933c1a5755d59609e058882ca1ad3774 *NAMESPACE
+186ce642a79134ab071d57c68feba2a1 *R/falconx.r
+2f6cb10c181351af87cb2af92ca620e0 *R/falconx_sub.r
+39359ca485cb799754c1e4712e589efc *R/script_basic.r
+cf9cdde07f928a8b463589091088a708 *data/Example.rda
+f850c247ec0db5f8cf6d16fb8f63d600 *man/biasMatrix.Rd
+5851ac5af6e6dcb7aa85ed6900f149e6 *man/falconx.Rd
+fed720437d0472bb2691c9efa8387a8e *man/getASCN.x.Rd
+716bd2c685c902fcdbae69a1a78d33c5 *man/getChangepoints.x.Rd
+c41ae0fec41984604215d7cf50ad72b3 *man/pos.Rd
+7dd7fb1c02924e648b8af3655226309b *man/readMatrix.Rd
+54fdfd7eff2f39051ffe40b43517a720 *man/tauhat.Rd
+09193c0432796a41af1f1df7dbad5239 *man/view.Rd
+66ddf916fd51b3342d2ad2c67ea6817d *src/falconx.c
