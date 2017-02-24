@@ -1,7 +1,21 @@
-getChangepoints.x = function(readMatrix, biasMatrix, verbose=TRUE, COri=c(0.95,1.05), error=1e-5, maxIter=1000){
+getChangepoints.x = function(readMatrix, biasMatrix, verbose=TRUE, COri=c(0.95,1.05), error=1e-5, maxIter=1000, independence=TRUE, pos=NULL, readlength=NULL){
   cat("Number of loci:", dim(readMatrix)[1], "\n")
-#  cat("Estimating break-points... \n")
-# if (is.null(rdep)) rdep = median(AT+BT)/median(AN+BN)
+  #  cat("Estimating break-points... \n")
+  # if (is.null(rdep)) rdep = median(AT+BT)/median(AN+BN)
+  if (!independence){
+    if (is.null(pos)){
+      cat("The position information is missing.  Pruning cannot be done. \n")
+      return(-1)
+    }
+    if (is.null(readlength)){
+      cat("The read length information is missing.  Pruning cannot be done. \n")
+      return(-1)
+    }
+    temp = pruning(pos, readlength, readMatrix, biasMatrix)
+    readMatrix = temp$readMatrix
+    biasMatrix = temp$biasMatrix
+    pos = temp$pos
+  }
   AN = readMatrix$AN
   BN = readMatrix$BN
   AT = readMatrix$AT
@@ -47,7 +61,21 @@ getChangepoints.x = function(readMatrix, biasMatrix, verbose=TRUE, COri=c(0.95,1
   return(tauhat)
 }
 
-getASCN.x = function(readMatrix, biasMatrix, tauhat=NULL, threshold=0.15, COri=c(0.95,1.05), error=1e-5, maxIter=1000){
+getASCN.x = function(readMatrix, biasMatrix, tauhat=NULL, threshold=0.15, COri=c(0.95,1.05), error=1e-5, maxIter=1000, independence=TRUE, pos=NULL, readlength=NULL){
+  if (!independence){
+    if (is.null(pos)){
+      cat("The position information is missing.  Pruning cannot be done. \n")
+      return(-1)
+    }
+    if (is.null(readlength)){
+      cat("The read length information is missing.  Pruning cannot be done. \n")
+      return(-1)
+    }
+    temp = pruning(pos, readlength, readMatrix, biasMatrix)
+    readMatrix = temp$readMatrix
+    biasMatrix = temp$biasMatrix
+    pos = temp$pos
+  }
   AN = readMatrix$AN
   BN = readMatrix$BN
   AT = readMatrix$AT
@@ -92,11 +120,14 @@ getASCN.x = function(readMatrix, biasMatrix, tauhat=NULL, threshold=0.15, COri=c
       Haplotype[[i]] = temp3
     }
   }
+  if (!independence){
+    return(list(tauhat=tauhat, ascn=rbind(cns1,cns2), Haplotype=Haplotype, readMatrix=readMatrix, biasMatrix=biasMatrix, pos=pos))
+  }
   return(list(tauhat=tauhat, ascn=rbind(cns1,cns2), Haplotype=Haplotype, readMatrix=readMatrix, biasMatrix=biasMatrix))
 }
 
 
-view = function(output, pos=NULL, rdep=NULL, plot="all", ...){
+view = function(output, pos=NULL, rdep=NULL, plot="all", independence=TRUE, ...){
   readMatrix = output$readMatrix
   tauhat = output$tauhat
   ascn = output$ascn
@@ -114,6 +145,9 @@ view = function(output, pos=NULL, rdep=NULL, plot="all", ...){
     myxlab = "SNP #"
   }else{
     myxlab = "Position (bp)"
+    if (!independence){
+      pos = output$pos
+    }
   }
   if (is.null(rdep)) rdep = median(AT+BT)/median(AN+BN)
   

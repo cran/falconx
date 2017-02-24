@@ -48,6 +48,17 @@ comb = function(tau, cns1, cns2, low=0.9, high=1.1){
   return(tau[-removeid])
 }
 
+## pruning
+pruning = function(pos, readlength, readMatrix, biasMatrix){
+  pos.diff = diff(pos)
+  ids = which(pos.diff>=0 & pos.diff<readlength)
+  if (length(ids)>0){
+    pos = pos[-(ids+1)]
+    readMatrix = readMatrix[-(ids+1),]
+    biasMatrix = biasMatrix[-(ids+1),]
+  }
+  return(list(readMatrix=readMatrix, biasMatrix=biasMatrix, pos=pos))
+}
 
 plotCN = function(n, tauhat, ascn, pos=NULL, gaincol="red", losscol="blue", neutralcol="green",xlab=NULL, ylab=NULL, pch=".",...){
   tauhat = sort(unique(c(1,tauhat,n)))

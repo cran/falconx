@@ -8,9 +8,6 @@ Hao Chen and Nancy R. Zhang
 
 Maintainer: Hao Chen (hxchen@ucdavis.edu)
 }
-\references{
-Chen, H., Jiang, Y., Maxwell, K., Nathanson, K. and Zhang, N. (2016). Allele-specific copy number estimation by whole Exome sequencing.
-}
 
 \seealso{
   \code{\link{getChangepoints.x}}, \code{\link{getASCN.x}}, \code{\link{view}}

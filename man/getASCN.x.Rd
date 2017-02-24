@@ -5,7 +5,7 @@
 }
 \usage{
 getASCN.x(readMatrix, biasMatrix, tauhat=NULL, threshold=0.15, COri=c(0.95,1.05), 
-error=1e-5, maxIter=1000)
+error=1e-5, maxIter=1000, independence=TRUE, pos=NULL, readlength=NULL)
 }
 \arguments{
   \item{readMatrix}{A data frame with four columns and the column names are "AN", "BN", "AT"
@@ -16,6 +16,10 @@ and B-allele coverage in the normal (control) sample, respectively.}
   \item{tauhat}{The estimated break points.  If it is not specified (NULL), then this function will first estimate the break points by calling the function "getChangepoints.x", and then estimate the parent-specific DNA copy number for each segment.}
   \item{threshold}{The estimated copy number are set to be 1 if it differs from 1 by less than this threshold.}
  \item{COri, error, maxIter}{Parameters used in estimating the success probabilities of the mixed binomial distribution.  See the manuscript by Chen and Zhang for more details.  "pOri" provides the initial success probabilities.  The two values in pOri needs to be different.  "error" provides the stopping criterion.  "maxIter" is the maximum iterating steps if the stopping criterion is not achieved.}
+   \item{independence}{The model assumes reads are conditionally independent.  If this argument is FALSE, the pruning approach will be performed.}
+  \item{pos}{The locations (in base pair) of the heterozygous sites. This information is needed when "independence=FALSE".}
+  \item{readlength}{The length of read if the data is from single-end sequencing, and the maximum span of read pairs if the data if from paired-end sequencing.  This information is needed when "independence=FALSE".}
+
 }
 \value{
   \item{tauhat}{A vector holding the estimated break points in terms of the index in the coverage vectors.}
